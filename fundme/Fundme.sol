@@ -12,7 +12,7 @@ contract Fundme {
 
     AggregatorV3Interface internal dataFeed;
 
-    uint256 constant minimumDonatedValueInUSD = 20 * 1e18; //minimum 20$ should be donated (like 20 to the 18 decimals, thats what 1e18 do)
+    uint256 constant minimumDonatedValueInUSD = 10 * 1e18; //minimum 10$ should be donated (like 10 to the 18 decimals, thats what 1e18 do)
 
     constructor() {
         dataFeed = AggregatorV3Interface(

@@ -1,4 +1,6 @@
-.deps
-.states
-.artifacts
+
+/.state
+artifacts
 .prettierrc.json
+state.json
+/.deps
