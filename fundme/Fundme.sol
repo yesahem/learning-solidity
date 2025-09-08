@@ -10,17 +10,16 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 contract Fundme {
     // fund function will be responsible to fund eth
 
-    AggregatorV3Interface internal dataFeed;
+    uint256 constant minimumDonatedValueInUSD = 10 * 1e10; //minimum 10$ should be donated (like 10 to the 18 decimals, thats what 1e18 do)
 
-    uint256 constant minimumDonatedValueInUSD = 10 * 1e18; //minimum 10$ should be donated (like 10 to the 18 decimals, thats what 1e18 do)
 
-    constructor() {
-        dataFeed = AggregatorV3Interface(
-            0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43
+
+    AggregatorV3Interface  dataFeed = AggregatorV3Interface(
+            // 0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43       //--> btc/usd address 
+            0x694AA1769357215DE4FAC081bf1f309aDC325306          // --> eth/usd address
         );
-    }
 
-    function getChainlinkDataFeedLatestAnswer() public view returns (uint256) {
+    function getEthPrice() public   view returns (uint256) {
         (
             ,
             /* uint80 roundId */
@@ -46,8 +45,8 @@ contract Fundme {
     function withdraw() public {}
 
 
-    function getConversionRate(uint256 ethAmountinWei) internal view returns (uint256){
-        uint256 currentETHPriceInUSD = getChainlinkDataFeedLatestAnswer();
+    function getConversionRate(uint256 ethAmountinWei) internal   view returns (uint256){
+        uint256 currentETHPriceInUSD = getEthPrice();
         uint256 finalizedPriceOfETH = (currentETHPriceInUSD * ethAmountinWei)/1e10;
         return uint256(finalizedPriceOfETH);
     }
