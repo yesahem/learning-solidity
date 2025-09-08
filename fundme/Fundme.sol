@@ -11,6 +11,8 @@ contract Fundme {
     // fund function will be responsible to fund eth
 
     uint256 constant minimumDonatedValueInUSD = 10 * 1e10; //minimum 10$ should be donated (like 10 to the 18 decimals, thats what 1e18 do)
+    address[] private  senderAddress;
+    mapping(address => uint256) public addressToAmountFunded;
 
 
 
@@ -39,6 +41,8 @@ contract Fundme {
 
         require(getConversionRate(msg.value)>= minimumDonatedValueInUSD, "Not enough fund is provided"); // 1e18 is equals to 1000000000000000000 wei  = 1000000000 Gwei
         // wei is the smallest ether unit
+        senderAddress.push(msg.sender);         // this will add all the sender address to the senderAddress list
+        addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender] + msg.value;      // this will keep track of history of which person donated how much eth;
     }
 
     // withdraw function is responsible to take out the funded eth to the wallet address
